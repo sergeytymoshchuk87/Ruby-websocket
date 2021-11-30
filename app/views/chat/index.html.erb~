@@ -1,0 +1,12 @@
+<h2> Page </h2>
+
+<script type="text/javascript">
+var task = {
+  name: 'Start taking advantage of WebSockets',
+  completed: false
+}
+
+var dispatcher = new WebSocketRails('localhost:3000/task');
+
+dispatcher.trigger('tasks.create', task);
+</script>

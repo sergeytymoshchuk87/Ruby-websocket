@@ -1,0 +1,31 @@
+<h2> Page </h2>
+
+<div id="source_1"><b>Number 1: </b><%= Source.last.try(:num1) %></div>
+<div id="source_2"><b>Number 2: </b><%= Source.last.try(:num2) %></div>
+<div id="source_3"><b>Number 3: </b><%= Source.last.try(:num3) %></div>
+<div id="source_4"><b>Number 4: </b><%= Source.last.try(:num4) %></div>
+<div id="source_5"><b>Number 5: </b><%= Source.last.try(:num5) %></div>
+
+<script type="text/javascript">
+var task = {
+  name: 'Start taking advantage of WebSockets',
+  completed: false
+}
+
+var dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+dispatcher.trigger('tasks.create', task);
+
+dispatcher.bind('tasks.create_success', function(task) {
+  //console.log('successfully created ' + task.num1);
+  //alert("Successfuly created!" + task.num1);
+  $("#source_1").html("<b>Number 1: </b>" + task.num1);
+  $("#source_2").html("<b>Number 2: </b>" + task.num2);
+  $("#source_3").html("<b>Number 3: </b>" + task.num3);
+  $("#source_4").html("<b>Number 4: </b>" + task.num4);
+  $("#source_5").html("<b>Number 5: </b>" + task.num5);
+  setTimeout(function(){
+  	dispatcher.trigger('tasks.create', task);
+  }, 1000)
+});
+</script>
